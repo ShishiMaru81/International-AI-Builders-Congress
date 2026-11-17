@@ -1,5 +1,6 @@
 node_modules/
 .next/
+apps/web/.next-rescue-e2e/
 .venv/
 __pycache__/
 .pytest_cache/
@@ -22,9 +23,19 @@ Thumbs.db
 # The full workflow is versioned as docs/ci-workflow.yml instead.
 /.github/workflows/ci.yml
 ml/artifacts/*.pt
+ml/artifacts/multicrop/**/*.pt
+ml/artifacts/multicrop/**/*.safetensors
 data/plantvillage/images/
 data/plantvillage/leaf-map.json
 data/plantvillage/original_*.txt
 tsconfig.tsbuildinfo
 test-results/
 playwright-report/
+
+# Local remediation / QA scratch (do not publish)
+work/
+storage-remediation-run/
+storage-*/
+*.log
+apps/api/*.db
+apps/api/agrosphere*.db

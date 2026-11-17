@@ -1,8 +1,14 @@
-# AgroDoctor research model card
+# Active multi-crop research models
+
+AgroDoctor uses two pinned upstream models: PlantVillage MobileNetV2 (38 global labels, 11 disease-enabled crop groups) and rice EfficientNet-B0 (17 classes). Both run locally from verified TorchScript exports. They have no independent AgroSphere accuracy evaluation or field validation. A 0.85 threshold is a research policy, not calibrated diagnostic certainty. See [sources, preprocessing, coverage and installation](agrodoctor-multicrop.md).
+
+No publisher metric is displayed as an AgroSphere result. The original tomato evaluation below is retained for historical reproducibility and saved-case readback; it does not describe the active multi-crop models.
+
+## Historical three-class tomato model
 
 MobileNetV3 Small, pretrained ImageNet backbone frozen, classifier trained for 10 epochs with seed 42. Artifact and measured evaluation are in `ml/artifacts/`; source inventory and reproducible grouped manifest are in `data/plantvillage/`.
 
-Actual selected labels: Tomato___Early_blight, Tomato___Late_blight, Tomato___healthy. All other conditions are unsupported. The app screens user-declared tomato images only; it does not have a validated crop detector or out-of-distribution detector.
+Actual selected labels: Tomato___Early_blight, Tomato___Late_blight, Tomato___healthy. All other conditions are unsupported by this historical artifact. The historical model screens user-declared tomato images only; it does not have a validated crop detector or out-of-distribution detector.
 
 570 original color images: 360 training, 90 validation, 120 holdout (40 per class). One image per unambiguous official physical-leaf group. Original test membership preserved; validation groups taken only from original training split. Exact checksum and conservative dHash duplicate screening found no duplicate selected images. Other near-duplicates may still exist; this is not an independent dataset audit.
 

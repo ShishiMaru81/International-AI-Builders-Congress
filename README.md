@@ -4,18 +4,34 @@ A software-first agricultural workspace: AgroDoctor leaf screening, FloodCrop ra
 
 For a public website, see [Netlify + free backend deployment](docs/netlify-deployment.md). The root `netlify.toml` configures the frontend and `render.yaml` prepares the separate free Python/PostgreSQL demo backend. Cloud deployment requires account authorization and the real HTTPS backend URL; localhost Docker URLs cannot serve Netlify visitors.
 
-## GitHub checkout with the trained model
+## KrishiMarket marketplace
 
-This version is maintained in the public repository `Nabib-Azad-Jisan/zyntrix-agrosphere-ai`. Model weights are distributed as an attributed research artifact in release `v0.1.0`, separate from Git history. With GitHub CLI installed:
+Direct fixed-price shopping with optional MOQ, optional auction lots, nearby-first 20 km discovery and nationwide eligible fulfillment is implemented in the existing app. Farmer/customer signup and operator-provisioned admin roles are enforced server-side. Checkout is a clearly labelled prototype with unpaid cash-on-delivery/pickup records; no online payments are processed.
+
+See [marketplace setup, roles, inventory rules and verification](docs/marketplace.md). Current local build: [English](http://127.0.0.1:3300/en/marketplace) / [Bangla](http://127.0.0.1:3300/bn/marketplace). Run additive Alembic migrations and the marketplace lifecycle worker for auction/order expiry; Compose includes the worker and preserves existing data/media volumes.
+
+Marketplace listings now have matching, locally bundled illustrative photos for 20 crops when seller photos are absent or unusable. Normal seller photos take priority. [Photo sources and licenses](docs/crop-images.md) are available through the marketplace's photo credits link.
+
+## AgroRescue harvest planner
+
+Open [English](http://127.0.0.1:3300/en/agrorescue) or [Bangla](http://127.0.0.1:3300/bn/agrorescue). Compare proceeds after declared costs, answer missing-information questions, review saved weather/screening context, and save private decision snapshots. Holding scenarios use explicit farmer assumptions. This is an explainable symbolic planner, with no trained future-price or spoilage prediction and no automatic selling. See [usage, API and limits](docs/agrorescue.md).
+
+For isolated browser QA, set `AGROSPHERE_NEXT_DIST_DIR=.next-rescue-e2e` and the matching `NEXT_PUBLIC_API_URL` on a separate web process/port. Point the test API at a separate database/storage and set `PLAYWRIGHT_BASE_URL`, `E2E_BASE_URL`, `AGROSPHERE_API_URL` and `E2E_API_URL` accordingly. The default build directory remains `.next`.
+
+## Multi-crop screening
+
+AgroDoctor now uses two pinned upstream research models for 12 crop groups: apple, cherry, maize, grape, orange, peach, bell pepper, potato, squash, strawberry, tomato and rice. Original three-class tomato artifacts and historical cases are preserved separately. See [multi-crop setup, sources and limitations](docs/agrodoctor-multicrop.md).
+
+Install the active bundles from the repository root before running native inference or local Compose:
 
 ```powershell
-git clone https://github.com/Nabib-Azad-Jisan/zyntrix-agrosphere-ai.git
-cd zyntrix-agrosphere-ai
-gh release download v0.1.0 --repo Nabib-Azad-Jisan/zyntrix-agrosphere-ai --pattern model.pt --dir ml/artifacts
-docker compose up -d --build
+.\.venv\Scripts\python -m pip install -r apps/api/requirements.txt
+.\.venv\Scripts\python -m pip install -r apps/api/requirements-ml.txt --index-url https://download.pytorch.org/whl/cpu
+.\.venv\Scripts\python -m pip install -r ml/doctor/requirements-export.txt
+.\.venv\Scripts\python scripts/install_doctor_models.py
 ```
 
-Open http://127.0.0.1:3100. The model card includes the artifact SHA-256 checksum. Without the optional model download, the application remains usable and explicitly abstains from disease classification. Source attribution, evaluation and limitations are committed alongside the training scripts. Private uploaded photos, local databases, credentials and installed dependencies are excluded from Git.
+Weights are downloaded from pinned SafeTensor revisions, verified and exported locally; no remote model code runs. Missing models are shown as unavailable. No independent multi-crop accuracy or field validation is claimed. The old `v0.1.0` tomato artifact alone does not enable multi-crop inference.
 
 ## Run locally (Windows, without Docker)
 
@@ -41,7 +57,7 @@ Open http://127.0.0.1:3000/en or /bn and choose **Explore a demo farm**. The ini
 
 To choose your area, open **FloodCrop AI**, search a place or click/drag the map pin, then consent and press **Save area & use live weather**. The same picker is available when creating a farm. Manual coordinates work when search is unavailable. See [area selection](docs/area-selection.md).
 
-For the current workspace, a Python environment has already been installed **one directory above** this repository (`../.venv`). Use `../../../.venv/Scripts/python.exe` from `apps/api` with that environment.
+The current checkout has its own `.venv` in this repository. Use `../../.venv/Scripts/python.exe` from `apps/api`. The implementation test/demo session uses API 8300 and web 3300 to keep older services separate.
 
 ## PostgreSQL / Docker
 
@@ -68,6 +84,7 @@ To repeat integration checks with the parent-directory environment used in this 
 ..\.venv\Scripts\python scripts/docker_verify.py
 $env:PLAYWRIGHT_BASE_URL='http://127.0.0.1:3100'
 $env:AGROSPHERE_API_URL='http://127.0.0.1:8100/api/v1'
+$env:E2E_API_URL=$env:AGROSPHERE_API_URL
 cd apps/web
 npm run test:e2e
 ```
@@ -78,9 +95,9 @@ For standalone PostgreSQL, set `DATABASE_URL=postgresql+psycopg://USER:PASSWORD@
 
 ## Models and data
 
-See [training instructions](ml/doctor/README.md) and [model card](docs/model_card.md). This workspace now contains a real three-class MobileNetV3 research model trained on 570 leaf-grouped PlantVillage images and evaluated on 120 held-out images. Install `apps/api/requirements-ml.txt` in the API environment to enable inference. The installed parent-directory environment already includes these libraries. Weights are intentionally ignored by Git; regenerate them using the documented preparation/training/release scripts when cloning source elsewhere.
+See [multi-crop setup](docs/agrodoctor-multicrop.md), [model cards](docs/model_card.md) and [original tomato training instructions](ml/doctor/README.md). The current models have 38 PlantVillage outputs and 17 rice outputs; only disease-enabled crops are selectable. Selecting a crop does not renormalize the model scores. Cross-crop global predictions and scores below 0.85 abstain. Closed-set scores remain uncalibrated and unknown/non-leaf inputs can still score highly.
 
-The app only enables an installed model after evaluation and an explicit artifact release flag. Without one it abstains and never generates sample disease scores. No model has been field-validated. Rainfall thresholds are illustrative heuristics, not flood probabilities. Initial market prices are synthetic examples, not reported transactions. Official FFWC and DAM links are references; no scraping is performed.
+Runtime uses installed CPU torch/torchvision and checks bundle metadata, checksums and outputs. The 0.958 original tomato holdout accuracy belongs only to the retired three-class artifact, never to these upstream models. Rainfall thresholds remain illustrative; initial market prices are synthetic; official FFWC/DAM links are references.
 
 ## Quality gates
 

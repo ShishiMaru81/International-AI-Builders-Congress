@@ -1,6 +1,7 @@
 from alembic import context
 from sqlalchemy import create_engine
 from app.db import Base,url
+from app import market_models
 config=context.config
 if context.is_offline_mode():
     context.configure(url=url,target_metadata=Base.metadata,literal_binds=True)

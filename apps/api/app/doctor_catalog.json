@@ -1,0 +1,199 @@
+{
+  "models": {
+    "plantvillage": {
+      "model_id": "plantvillage",
+      "source_repo": "neghani/plantvillage-mobilenetv2",
+      "revision": "d33601185b32cf05b3942661b8d84ffb86dc48ec",
+      "source_url": "https://huggingface.co/neghani/plantvillage-mobilenetv2",
+      "license": "apache-2.0",
+      "source_sha256": "f1a98e77629c36b5fe90a0fbed7ba56f097ce419c6dad8456bd135f36ea8d426",
+      "labels": [
+        "Apple___Apple_scab",
+        "Apple___Black_rot",
+        "Apple___Cedar_apple_rust",
+        "Apple___healthy",
+        "Blueberry___healthy",
+        "Cherry_(including_sour)___Powdery_mildew",
+        "Cherry_(including_sour)___healthy",
+        "Corn_(maize)___Cercospora_leaf_spot Gray_leaf_spot",
+        "Corn_(maize)___Common_rust_",
+        "Corn_(maize)___Northern_Leaf_Blight",
+        "Corn_(maize)___healthy",
+        "Grape___Black_rot",
+        "Grape___Esca_(Black_Measles)",
+        "Grape___Leaf_blight_(Isariopsis_Leaf_Spot)",
+        "Grape___healthy",
+        "Orange___Haunglongbing_(Citrus_greening)",
+        "Peach___Bacterial_spot",
+        "Peach___healthy",
+        "Pepper,_bell___Bacterial_spot",
+        "Pepper,_bell___healthy",
+        "Potato___Early_blight",
+        "Potato___Late_blight",
+        "Potato___healthy",
+        "Raspberry___healthy",
+        "Soybean___healthy",
+        "Squash___Powdery_mildew",
+        "Strawberry___Leaf_scorch",
+        "Strawberry___healthy",
+        "Tomato___Bacterial_spot",
+        "Tomato___Early_blight",
+        "Tomato___Late_blight",
+        "Tomato___Leaf_Mold",
+        "Tomato___Septoria_leaf_spot",
+        "Tomato___Spider_mites Two-spotted_spider_mite",
+        "Tomato___Target_Spot",
+        "Tomato___Tomato_Yellow_Leaf_Curl_Virus",
+        "Tomato___Tomato_mosaic_virus",
+        "Tomato___healthy"
+      ],
+      "preprocessing": {
+        "resize": 256,
+        "crop": 224,
+        "mean": [
+          0.5,
+          0.5,
+          0.5
+        ],
+        "std": [
+          0.5,
+          0.5,
+          0.5
+        ],
+        "interpolation": "bilinear"
+      },
+      "threshold": 0.85,
+      "field_validated": false
+    },
+    "rice": {
+      "model_id": "rice",
+      "source_repo": "Huyt/rice-leaf-disease-efficientnet-b0",
+      "revision": "a12e09fd765eda2b846836a965e951151a9125f7",
+      "source_url": "https://huggingface.co/Huyt/rice-leaf-disease-efficientnet-b0",
+      "license": "apache-2.0",
+      "source_sha256": "33e38196b5726796cdaccfdfa906f8db8524b087b4d5e13d87de7a1a5e118023",
+      "labels": [
+        "Rice___Bacterial_Blight",
+        "Rice___Bacterial_Streak",
+        "Rice___Bakanae",
+        "Rice___Brown_Spot",
+        "Rice___False_Smut",
+        "Rice___Grassy_Stunt_Virus",
+        "Rice___Healthy",
+        "Rice___Hispa",
+        "Rice___Leaf_Blast",
+        "Rice___Leaf_Scald",
+        "Rice___Narrow_Brown_Spot",
+        "Rice___Neck_Blast",
+        "Rice___Ragged_Stunt_Virus",
+        "Rice___Sheath_Blight",
+        "Rice___Sheath_Rot",
+        "Rice___Stem_Rot",
+        "Rice___Tungro"
+      ],
+      "preprocessing": {
+        "resize": 256,
+        "crop": 224,
+        "mean": [
+          0.485,
+          0.456,
+          0.406
+        ],
+        "std": [
+          0.229,
+          0.224,
+          0.225
+        ],
+        "interpolation": "bicubic"
+      },
+      "threshold": 0.85,
+      "field_validated": false
+    }
+  },
+  "crops": [
+    {
+      "id": "apple",
+      "name_en": "Apple",
+      "name_bn": "আপেল",
+      "label_prefix": "Apple",
+      "model_id": "plantvillage"
+    },
+    {
+      "id": "cherry",
+      "name_en": "Cherry",
+      "name_bn": "চেরি",
+      "label_prefix": "Cherry_(including_sour)",
+      "model_id": "plantvillage"
+    },
+    {
+      "id": "maize",
+      "name_en": "Maize",
+      "name_bn": "ভুট্টা",
+      "label_prefix": "Corn_(maize)",
+      "model_id": "plantvillage"
+    },
+    {
+      "id": "grape",
+      "name_en": "Grape",
+      "name_bn": "আঙুর",
+      "label_prefix": "Grape",
+      "model_id": "plantvillage"
+    },
+    {
+      "id": "orange",
+      "name_en": "Orange",
+      "name_bn": "কমলা",
+      "label_prefix": "Orange",
+      "model_id": "plantvillage"
+    },
+    {
+      "id": "peach",
+      "name_en": "Peach",
+      "name_bn": "পিচ",
+      "label_prefix": "Peach",
+      "model_id": "plantvillage"
+    },
+    {
+      "id": "bell_pepper",
+      "name_en": "Bell pepper",
+      "name_bn": "ক্যাপসিকাম",
+      "label_prefix": "Pepper,_bell",
+      "model_id": "plantvillage"
+    },
+    {
+      "id": "potato",
+      "name_en": "Potato",
+      "name_bn": "আলু",
+      "label_prefix": "Potato",
+      "model_id": "plantvillage"
+    },
+    {
+      "id": "squash",
+      "name_en": "Squash",
+      "name_bn": "স্কোয়াশ",
+      "label_prefix": "Squash",
+      "model_id": "plantvillage"
+    },
+    {
+      "id": "strawberry",
+      "name_en": "Strawberry",
+      "name_bn": "স্ট্রবেরি",
+      "label_prefix": "Strawberry",
+      "model_id": "plantvillage"
+    },
+    {
+      "id": "tomato",
+      "name_en": "Tomato",
+      "name_bn": "টমেটো",
+      "label_prefix": "Tomato",
+      "model_id": "plantvillage"
+    },
+    {
+      "id": "rice",
+      "name_en": "Rice",
+      "name_bn": "ধান",
+      "label_prefix": "Rice",
+      "model_id": "rice"
+    }
+  ]
+}

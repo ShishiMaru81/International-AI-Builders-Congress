@@ -1,0 +1,4 @@
+# Reproducible CPU conversion only. Runtime uses exported TorchScript and base ML requirements.
+transformers==5.23.0
+timm==1.0.31
+safetensors==0.8.0

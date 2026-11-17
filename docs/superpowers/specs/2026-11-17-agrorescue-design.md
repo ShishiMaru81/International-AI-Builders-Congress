@@ -1,0 +1,25 @@
+# AgroRescue and marketplace crop imagery
+
+The user accepted the proposed AgroRescue feature and explicitly requested implementation plus appropriate marketplace images. This records that accepted scope; implementation proceeds in the existing feature checkout to preserve the extensive uncommitted working project. No reset, stash, commit, push or deployment.
+
+## Approach
+Build an explainable symbolic decision planner, not an untrained price/spoilage predictor or an unconstrained chatbot. Compare declared sell-now options using Decimal money, ask for missing decision inputs, optionally compare a farmer-entered hold scenario, and attach existing owned plot/weather/price/AgroDoctor evidence. Do not imply competitor listings are buyer demand. No automatic selling or harvesting. A future learned model requires suitable data and separate evaluation.
+
+Alternatives considered: a standalone calculator would miss plot evidence and follow-up questions; an LLM-only agent could invent prices and numerical certainty. The accepted recommendation is integrated evidence-aware planning. Deterministic constrained planning is the implementation choice; explain that honestly in the interface.
+
+## Planner contract
+POST /api/v1/rescue/plans accepts plot_id, harvested_kg (0 < q <= 1000000), ready_to_sell (boolean or null), cold_storage (boolean or null), hold_price_bdt (optional positive hypothetical price), hold_loss_pct (optional 0..100 assumption), storage_cost_bdt (optional nonnegative total), and options (1..6). Each option has label, optional owned price_id OR farmer-entered price_bdt, transport_bdt (nullable: unknown), handling_bdt and fees_bdt (nonnegative default zero), confirmed (user-reported quote commitment, default false). All inputs finite, bounded, extra fields rejected. Client must not silently turn blank costs into zero.
+
+Response: id, plot_id, created_at, commodity, method='symbolic_constraint_planner_v1', status='ready'|'needs_information'|'no_feasible_option', recommended_option_id (nullable), options (id, label, kind='sell_now'|'hold', feasible, net_bdt nullable, gross_bdt nullable, costs_bdt nullable, saleable_kg nullable, reasons list of stable codes, meta object), questions (code, text), warnings (stable codes), evidence (weather|null, case|null), assumptions (input snapshot), disclaimer. Option IDs sell-0..sell-N, hold. GET /rescue/plans?plot_id= returns latest 20 owned plans; GET /rescue/plans/{id} returns owned immutable snapshot with snapshot notice; DELETE removes owned plan and related action. Stored as Record(kind='rescue_plan'), no new table/migration. Shared export/deletion applies; plot deletion must cascade these records. Persist one open rescue action per plot, pointing to latest saved plan.
+
+Stored-price options must match crop, kg unit and one price_type/grade comparison basis; old/future/unknown date quotes are visibly flagged and cannot produce a ready recommendation until confirmed by farmer. DEMO sources are always visible. All options with unknown costs are unresolved; do not choose a winner while an unresolved option could change it. A hold option is only calculable with explicit price, loss and cost assumptions and suitable storage confirmed; it remains hypothetical and cannot outrank an actual sell-now recommendation. Equal nets produce a tie warning. Negative nets do not lead to a positive recommendation. Unknown/not-ready crop status blocks selling advice.
+
+Use saved weather only; UI offers explicit LIVE/DEMO refresh through existing weather endpoint. Missing/stale/expired/failed refresh does not become safe weather. No rainfall-to-inundation or decay conversion. Latest screening remains research evidence; uncertain cases trigger inspect-first context without diagnoses or food-safety claims.
+
+## Interface and imagery
+Add bilingual /en/agrorescue and /bn/agrorescue routes/navigation, responsive form, option cards, question list, clear source and hypothetical labels, saved plan history and links to source modules. Invalidate/reset result on changed inputs/plot/account and guard late responses. Avoid automatic mutations/orders.
+
+Use crop-specific local image assets as illustrative fallbacks, preserving all seller uploads. Uploaded-image failure uses fallback and the illustrative label. Handle English/Bangla crop synonyms, unknown crops generic, no wrong substring matches (e.g. pineapple/apple, sweet potato/potato). Document asset origin/license and show these are example produce, not seller evidence. Public assets must work offline after download.
+
+## Verification
+Test money example 3900 vs 3700, missing costs, ties/negative nets, readiness, hold assumptions, stale/simulated evidence, ownership/foreign prices/crop mismatch, saved plans/export/deletion; image matching/upload priority/failure. Run all API and web tests, typecheck/build/lint and browser flows in English and Bangla/mobile. Preserve original services on 3000/8000; use 3300/8300 or isolated test ports. Record actual results and limitations.

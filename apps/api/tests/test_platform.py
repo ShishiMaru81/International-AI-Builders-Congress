@@ -1,18 +1,17 @@
-import io, os, tempfile
-from pathlib import Path
-os.environ['DATABASE_URL']=os.getenv('TEST_DATABASE_URL','sqlite:///'+str(Path(tempfile.gettempdir())/'agrosphere-tests.db').replace('\\','/'))
-os.environ['IMAGE_STORAGE_PATH']=str(Path(tempfile.gettempdir())/'agrosphere-test-images')
-os.environ['MODEL_DIR']=str(Path(tempfile.gettempdir())/'agrosphere-no-model-test')
+import io
+from tests.conftest import configure_isolated_test_env
+configure_isolated_test_env()
 from fastapi.testclient import TestClient
 from PIL import Image
 from app.main import app
 from app.db import Base,engine
+from app.test_guard import safe_reset_test_metadata
 from app.services import calculate,preparedness,DemoWeatherProvider
 import pytest
 
 @pytest.fixture
 def client():
-    Base.metadata.drop_all(engine)
+    safe_reset_test_metadata(engine, Base.metadata)
     with TestClient(app) as c:yield c
 @pytest.fixture
 def session(client):
@@ -32,7 +31,7 @@ def test_upload_history_feedback_export_delete(client,session):
     assert r.status_code==200,r.text
     c=r.json();assert c['classification']['abstained'] and c['classification']['score'] is None
     assert c['meta']['mode']=='DEMO' and c['quality_flags']
-    assert client.get('/api/v1/doctor/cases').json()[0]['id']==c['id']
+    assert client.get('/api/v1/doctor/cases').json()['items'][0]['id']==c['id']
     assert client.get(f"/api/v1/doctor/cases/{c['id']}/image").headers['content-type']=='image/jpeg'
     assert client.post(f"/api/v1/doctor/cases/{c['id']}/feedback",json={'note':'Monitor tomorrow','request_review':True}).status_code==200
     assert 'unknown' in client.get(f"/api/v1/doctor/cases/{c['id']}/report").text
