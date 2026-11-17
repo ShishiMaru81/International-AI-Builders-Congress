@@ -1,0 +1,66 @@
+{
+  "metrics": {
+    "accuracy": 0.9583333333333334,
+    "macro_f1": 0.9579734522505606,
+    "ece": 0.052021848162015306,
+    "abstention_rate": 0.008333333333333333,
+    "seconds_per_image": 0.013361398333332393
+  },
+  "per_class": {
+    "Tomato___Early_blight": {
+      "precision": 0.972972972972973,
+      "recall": 0.9,
+      "f1-score": 0.935064935064935,
+      "support": 40.0
+    },
+    "Tomato___Late_blight": {
+      "precision": 0.9302325581395349,
+      "recall": 1.0,
+      "f1-score": 0.963855421686747,
+      "support": 40.0
+    },
+    "Tomato___healthy": {
+      "precision": 0.975,
+      "recall": 0.975,
+      "f1-score": 0.975,
+      "support": 40.0
+    },
+    "accuracy": 0.9583333333333334,
+    "macro avg": {
+      "precision": 0.9594018437041694,
+      "recall": 0.9583333333333334,
+      "f1-score": 0.9579734522505606,
+      "support": 120.0
+    },
+    "weighted avg": {
+      "precision": 0.9594018437041693,
+      "recall": 0.9583333333333334,
+      "f1-score": 0.9579734522505606,
+      "support": 120.0
+    }
+  },
+  "confusion_matrix": [
+    [
+      36,
+      3,
+      1
+    ],
+    [
+      0,
+      40,
+      0
+    ],
+    [
+      1,
+      0,
+      39
+    ]
+  ],
+  "split_counts": {
+    "train": 360,
+    "val": 90,
+    "test": 120
+  },
+  "seed": 42,
+  "field_metrics": null
+}

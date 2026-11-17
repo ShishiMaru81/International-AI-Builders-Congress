@@ -1,0 +1,20 @@
+{
+  "name": "PlantVillage selected tomato color subset",
+  "version": "9e97599868962bd0079b8db4b7f1efa9185fa1e7",
+  "url": "https://huggingface.co/datasets/mohanty/PlantVillage",
+  "license": "CC BY-SA 3.0 (dataset card declaration)",
+  "attribution": "Mohanty, Hughes and Salathe (2016), Digital Epidemiology Lab, EPFL. DOI:10.3389/fpls.2016.01419",
+  "permission_verified": true,
+  "permission_basis": "Original author dataset card declares CC BY-SA 3.0; source retained, attribution provided. No independent legal review.",
+  "grouping_method": "One image per unambiguous official physical-leaf ID. Original test split preserved; 30 training groups per class reserved for validation. Conservative dHash distance <=4 exclusion across all selected images.",
+  "downloaded_at": "2026-11-16T16:26:52.096469+00:00",
+  "github_commit": "7f7ecc7e1eaca78107e3affe7cb5abd9427e139a",
+  "leaf_map_sha256": "3b4b253683c6911744959a3870a92509b1faa1ee34e9f8585e21d0fe6337a25b",
+  "labels": [
+    "Tomato___Early_blight",
+    "Tomato___Late_blight",
+    "Tomato___healthy"
+  ],
+  "removed_near_duplicates": 0,
+  "field_validated": false
+}

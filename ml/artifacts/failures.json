@@ -1,0 +1,32 @@
+[
+  {
+    "path": "raw/color/Tomato___Early_blight/00c5c908-fc25-4710-a109-db143da23112___RS_Erly.B 7778.JPG",
+    "expected": "Tomato___Early_blight",
+    "predicted": "Tomato___healthy",
+    "score": 0.6707450151443481
+  },
+  {
+    "path": "raw/color/Tomato___Early_blight/468dba17-366a-422f-b3b6-061261942b0d___RS_Erly.B 7853.JPG",
+    "expected": "Tomato___Early_blight",
+    "predicted": "Tomato___Late_blight",
+    "score": 0.618902325630188
+  },
+  {
+    "path": "raw/color/Tomato___Early_blight/a138ec63-9d5e-4c6d-97d6-da0159c93c0a___RS_Erly.B 7744.JPG",
+    "expected": "Tomato___Early_blight",
+    "predicted": "Tomato___Late_blight",
+    "score": 0.980819046497345
+  },
+  {
+    "path": "raw/color/Tomato___Early_blight/c73fd35a-bc55-46c3-baf3-a943a6e396c5___RS_Erly.B 9563.JPG",
+    "expected": "Tomato___Early_blight",
+    "predicted": "Tomato___Late_blight",
+    "score": 0.6260222792625427
+  },
+  {
+    "path": "raw/color/Tomato___healthy/9d447b38-bd33-46f0-880b-324481fbae19___RS_HL 0366.JPG",
+    "expected": "Tomato___healthy",
+    "predicted": "Tomato___Early_blight",
+    "score": 0.4125500023365021
+  }
+]

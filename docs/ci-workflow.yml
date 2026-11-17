@@ -1,0 +1,26 @@
+name: Quality gates
+on: [push, pull_request]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - uses: actions/setup-node@v4
+        with: {node-version: '24'}
+      - run: node --test scripts/netlify-preflight.test.mjs
+      - run: pip install -r apps/api/requirements.txt
+      - run: python -m pytest -q
+        working-directory: apps/api
+      - run: npm ci
+        working-directory: apps/web
+      - run: npm run lint && npm run test && npm run build
+        working-directory: apps/web
+      - run: npx playwright install --with-deps chromium
+        working-directory: apps/web
+      - run: |
+          (cd apps/api && uvicorn app.main:app --host 127.0.0.1 --port 8000) &
+          (cd apps/web && npm run start) &
+          for i in $(seq 1 30); do curl -fs http://127.0.0.1:3000/en && break || sleep 1; done
+          cd apps/web && PLAYWRIGHT_CHANNEL=chromium npm run test:e2e

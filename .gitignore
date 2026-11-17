@@ -1,0 +1,30 @@
+node_modules/
+.next/
+.venv/
+__pycache__/
+.pytest_cache/
+*.db
+storage/
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.pfx
+*.p12
+.aws/
+.codex/
+.agents/
+.DS_Store
+.netlify/
+Thumbs.db
+# The current GitHub OAuth login cannot create active Actions workflows.
+# The full workflow is versioned as docs/ci-workflow.yml instead.
+/.github/workflows/ci.yml
+ml/artifacts/*.pt
+data/plantvillage/images/
+data/plantvillage/leaf-map.json
+data/plantvillage/original_*.txt
+tsconfig.tsbuildinfo
+test-results/
+playwright-report/

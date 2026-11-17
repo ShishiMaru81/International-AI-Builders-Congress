@@ -1,0 +1,12 @@
+# Milestones
+- [x] 0: Read plan, source feasibility, architecture decisions
+- [x] 1: Local/PostgreSQL databases, demo authentication, farms, bilingual shell
+- [x] 2: Secure AgroDoctor upload, case history, feedback, report
+- [x] 3: Model registry, actual three-class training/holdout evaluation, honest fallback
+- [x] 4: Live weather HTTP verification, preparedness rules, map, official references
+- [x] 5: Market import, source validation, decimal calculator
+- [x] 6: Integrated actions, notifications, responsive UI and reduced-motion transitions
+- [x] 7: Authenticated device ingestion, CI definition, local tests, documentation
+- [ ] Full secondary-content Bangla translation and expert review
+- [x] PostgreSQL/container execution, migration consistency, 10 PostgreSQL tests and restart persistence
+- [ ] Independent field evaluation, production identity/security, official feed authorization

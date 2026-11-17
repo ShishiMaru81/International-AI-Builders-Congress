@@ -1,0 +1,30 @@
+{
+  "actual_http_inference": {
+    "top_label": "Tomato___Early_blight",
+    "abstained": false,
+    "score": 0.9412649869918823,
+    "score_type": "uncalibrated_model_score",
+    "alternatives": [
+      {
+        "label": "Tomato___Early_blight",
+        "score": 0.9412649869918823
+      },
+      {
+        "label": "Tomato___Late_blight",
+        "score": 0.05873230844736099
+      },
+      {
+        "label": "Tomato___healthy",
+        "score": 2.7361547836335376e-06
+      }
+    ]
+  },
+  "model_version": "mobilenetv3-tomato-20aa688a66",
+  "quality_flags": [],
+  "expected_dataset_label": "Tomato___Early_blight",
+  "live_weather_connectivity": {
+    "status": 200,
+    "source": "Open-Meteo",
+    "is_simulated": false
+  }
+}

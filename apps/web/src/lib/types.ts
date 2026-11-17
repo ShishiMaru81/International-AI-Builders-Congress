@@ -1,0 +1,9 @@
+export type Meta={mode:string;source_name:string;is_simulated:boolean;observed_at?:string;retrieved_at?:string;issued_at?:string;freshness?:string;attribution?:string;quality_flags?:string[]};
+export type Farm={id:string;name:string;district:string;latitude?:number|null;longitude?:number|null;location_consent:boolean;location_name?:string;country?:string};
+export type Plot={id:string;name:string;farm_id:string;crop:string;area_acres:string;stage:string;low_lying:boolean};
+export type Action={id:string;title:string;topic:string;reason:string;status:string;meta:Meta};
+export type Case={id:string;created_at:string;status:string;symptoms:string;quality_flags:string[];classification:{top_label:string;abstained:boolean;score:number|null;score_type:string;alternatives:{label:string;score:number}[]};model:Model;advice:string[];disclaimer:string;meta:Meta};
+export type Model={version:string;available:boolean;field_validated:boolean;labels:string[];metrics:Record<string,number>|null;limitations:string[];source?:string};
+export type Price={id:string;market:string;commodity:string;price:string;unit:string;price_type:string;grade:string;observed_at:string;meta:Meta};
+export type Weather={hourly:{time:string;rain_mm:number}[];meta:Meta;total_mm:number;level:string;horizon_hours:number;threshold_mm:number;reasons:string[];disclaimer:string;location:{lat:number;lon:number}};
+export type Device={id:string;name:string;plot_id:string;status:string;last_reading?:{source_type:string;measurements:Record<string,number|null>;quality_flags:string[]}};
